@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Book List Page</title>
+  </head>
+  <body>
+    <h1>This is Book List</h1>
+      {% for book in queryset  %}
+        <p>{{ book }} </p>
+
+      {% endfor %}
+  </body>
+</html>
