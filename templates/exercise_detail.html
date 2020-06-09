@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-
+{% load static %}
 {% block breadcrumb %}
   <li class="breadcrumb-item" aria-current="page">
     <a href="{% url 'books:book-list'  %}">Book List</a>
@@ -37,11 +37,11 @@
         </main>
 
         <aside class="col-md-8">
-          <div class="card" >
+          <div class="card"  >
               <div class="card-header">
                 Solutions
               </div>
-
+              {% if exercise.chapter.book in request.user.userlibrary.book_list %}
                 {% for solution in exercise.solution_set.all %}
                       <div class="accordion" id="toggle-{{solution.solution_number}}">
                           <div class="card">
@@ -61,6 +61,17 @@
                           </div>
                       </div>
                 {% endfor %}
+
+                {% else %}
+                  <div class="text-center">
+                    <h4>You do not have access to this book.
+                    <a href="#">Purchase this book</a> to have access to  the solutions.
+                  </h4>
+                    <img src="{% static 'images/lock.png' %}" style="width: 100%;">
+                      {% endif %}
+                  </div>
+
+
 
 
           </div>

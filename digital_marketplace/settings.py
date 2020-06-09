@@ -134,6 +134,8 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 STATIC_ROOT=os.path.join(BASE_DIR,'static_root')
 MEDIA_ROOT=os.path.join(BASE_DIR,'media_root')
 
+LOGIN_REDIRECT_URL='/'
+
 #django allauth settings
 AUTHENTICATION_BACKENDS = [
 
@@ -142,6 +144,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 1
+
+#it is used , so that django allauth signup page won't end with connection error tring to send mail for verification on signup
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 #crispy template pack
 

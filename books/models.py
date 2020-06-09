@@ -1,5 +1,7 @@
 from django.db import models
 from django.shortcuts import redirect, reverse
+from django.db.models.signals import post_save
+from django.conf import settings
 
 # Create your models here.
 '''Model Structure
@@ -16,6 +18,27 @@ Author--
         ...
 
 '''
+
+class UserLibrary(models.Model):
+    books = models.ManyToManyField('Book')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+    def book_list(self):
+        return self.books.all()
+
+    class Meta:
+        verbose_name ='User Library'
+        verbose_name_plural ='User Library'
+
+def post_user_signup_receiver(sender, instance, created, *args,**kwargs):
+    if created:
+        UserLibrary.objects.get_or_create(user=instance)
+
+post_save.connect(post_user_signup_receiver, sender = settings.AUTH_USER_MODEL)
+
 
 class Author(models.Model):
     first_name = models.CharField(max_length=30)
