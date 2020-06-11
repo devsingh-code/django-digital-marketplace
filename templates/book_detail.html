@@ -8,35 +8,11 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-<h1>This is Book detail</h1>
-  <p>{{ book }} </p>
+
 <div class="row">
   <main class="col-md-4">
 
-      <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          {{book.title}}
-        </div>
-          <img src="{{book.cover.url}}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Published: {{book.publication_date}}</p>
-          </div>
-          <div class="card-footer">
-          {% if in_cart %}
-
-          <a href="{% url 'cart:remove-from-cart' book.slug %}"class="btn btn-secondary btn-block">
-            Remove from Cart
-          </a>
-
-          {% else %}
-
-          <a href="{% url 'cart:add-to-cart' book.slug %}" class="btn btn-warning btn-block">
-            Add to Cart
-          </a>
-
-          {% endif %}
-          </div>
-      </div>
+  {% include "book_snippet.html" with book=book %}
 
   </main>
 
