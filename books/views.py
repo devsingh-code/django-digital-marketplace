@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Book, Chapter,Exercise
 from django.http import  Http404
+from shopping_cart.models import Order, OrderItem
 # Create your views here.
 
 def book_list(request):
@@ -16,8 +17,19 @@ def book_list(request):
 def book_detail(request, slug):
     '''display list of chapters in book and other info regarding book'''
     book = get_object_or_404(Book, slug = slug)
+    order_qs = Order.objects.filter(user=request.user)
+    book_is_in_cart = False
+    if order_qs.exists():
+        order = order_qs[0]
+        order_item_qs = OrderItem.objects.filter(book=book)
+        if order_item_qs.exists():
+            order_item = order_item_qs[0]
+            if order_item in order.items.all():
+                book_is_in_cart =True
+
     context ={
-        'book': book
+        'book': book,
+        'in_cart' : book_is_in_cart
     }
     return render(request, 'book_detail.html', context)
 
