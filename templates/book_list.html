@@ -17,7 +17,7 @@
               <span>{{ author}}</span> {% if book.authors.count > 1 %} |{% endif%}
           {% endfor %}
       </p>
-      <a href="{{ book.get_absolute_url }}" class="btn btn-secondary">{{ book }}</a>
+      <a href="{{ book.get_absolute_url }}" class="btn btn-primary">{{ book }}</a>
     </div>
   </div>
     {% endfor %}

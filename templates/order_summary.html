@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<h1>Order Summary</h1>
+<hr>
+  <table class="table table-hover table-bordered text-center">
+    <tr class="text-center" >
+      <th>No.</th>
+      <th>Title</th>
+      <th>Price</th>
+
+    </tr>
+
+    {% for item in order.items.all  %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{item.book.title}}
+            <a href="{% url 'cart:remove-from-cart' item.book.slug %}" class="text-danger"><svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                  </svg></a>
+          </td>
+          <td>{{item.book.price}} INR</td>
+
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">There are no items in your cart.</td>
+        </tr>
+    {% endfor %}
+    {% if order.get_total %}
+    <tr>
+      <td colspan="2">
+        <strong class="pull-right">Order Total: </strong>
+      </td>
+      <td colspan="1">
+        <strong>{{order.get_total}} INR</strong>
+      </td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td colspan="3">
+        {% if order %}
+        <a class="btn btn-warning pull-left" href="{% url 'books:book-list' %}">
+          Continue Shopping
+        {% else %}
+          Add items to your cart
+        {% endif %}
+        </a>
+      </td>
+    </tr>
+{% if order.get_total %}
+    <tr>
+      <td colspan="3">
+
+        <a class="btn btn-secondary pull-left" href="{% url 'cart:checkout'%}">
+          Checkout
+        </a>
+      </td>
+    </tr>
+    {% endif %}
+  </table>
+
+
+{% endblock content %}
