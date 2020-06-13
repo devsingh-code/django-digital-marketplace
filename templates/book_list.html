@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 
 {% block breadcrumb %}
-  <li class="breadcrumb-item active" aria-current="page">Book List</li>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Book List</li>
+    </ol>
+    </nav>
+
 {% endblock breadcrumb %}
 
 {% block content %}
 <h1>This is Book List</h1>
 <hr>
+<div class="row">
   {% for book in queryset  %}
+  <div class="col-4">
   <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">{{book.title}}</h5>
@@ -20,5 +27,7 @@
       <a href="{{ book.get_absolute_url }}" class="btn btn-primary">{{ book }}</a>
     </div>
   </div>
+</div>
     {% endfor %}
+</div>
 {% endblock content %}
